@@ -1,2 +1,3 @@
 var komunikat = "Działa KURWA";
 console.log(komunikat);
+console.log(komunikat);
