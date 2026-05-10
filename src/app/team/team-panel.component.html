@@ -1,0 +1,14 @@
+<aside class="panel">
+  <p class="label">Osoba 2</p>
+  <h2>Zespół</h2>
+
+  <div class="member-list">
+    @for (member of store.members(); track member.id) {
+      <article>
+        <strong>{{ member.name }}</strong>
+        <span>{{ member.role }}</span>
+        <p>{{ member.focus }}</p>
+      </article>
+    }
+  </div>
+</aside>

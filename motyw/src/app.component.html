@@ -1,0 +1,13 @@
+<h3>Theme with CSS Variables</h3>
+<div [class.theme-dark]="dark" class="toolbar">
+  <button (click)="dark = !dark">Toggle {{ dark ? 'Light' : 'Dark' }}</button>
+  <span class="swatch" 
+        *ngFor="let color of colors" 
+        [style.background]="color"
+        (click)="setAccent(color)"
+        [title]="color">
+  </span>
+</div>
+<div class="box" [style.--accent]="accent">
+  Current accent color: {{ accent }}
+</div>

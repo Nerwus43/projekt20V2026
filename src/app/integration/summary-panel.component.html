@@ -1,0 +1,49 @@
+<section class="summary">
+  <div>
+    <p class="label">Osoba 3</p>
+    <h2>Integracja</h2>
+  </div>
+  <p>
+    Integrator pilnuje wspolnego modelu danych, laczy modul zadan z modulem zespolu
+    i sprawdza, czy aplikacja dziala jako jedna calosc.
+  </p>
+  <strong>{{ store.completionPercent() }}% gotowe</strong>
+</section>
+
+<section class="integration-grid">
+  <article class="integration-card">
+    <p class="label">Statusy</p>
+    <div class="status-list">
+      @for (group of store.tasksByStatus(); track group.value) {
+        <div>
+          <span>{{ group.label }}</span>
+          <strong>{{ group.tasks.length }}</strong>
+        </div>
+      }
+    </div>
+  </article>
+
+  <article class="integration-card">
+    <p class="label">Odpowiedzialnosc</p>
+    <div class="status-list">
+      @for (group of store.tasksByOwner(); track group.member.id) {
+        <div>
+          <span>{{ group.member.name }}</span>
+          <strong>{{ group.tasks.length }}</strong>
+        </div>
+      }
+    </div>
+  </article>
+
+  <article class="integration-card">
+    <p class="label">Checklist integratora</p>
+    <ul>
+      @for (item of store.integrationChecklist(); track item.id) {
+        <li [class.done]="item.done">
+          <span></span>
+          {{ item.label }}
+        </li>
+      }
+    </ul>
+  </article>
+</section>

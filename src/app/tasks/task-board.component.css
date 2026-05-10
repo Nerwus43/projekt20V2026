@@ -1,0 +1,68 @@
+.panel {
+  border: 1px solid #d7dee8;
+  border-radius: 8px;
+  background: #fff;
+  padding: 18px;
+}
+
+.panel-header,
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.label {
+  margin: 0 0 4px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+.task-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.task-card {
+  display: grid;
+  gap: 14px;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #64748b;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fbfcfe;
+}
+
+.task-card.high {
+  border-left-color: #2563eb;
+}
+
+.task-card p {
+  margin-top: 6px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+footer span,
+footer strong,
+.panel-header span {
+  border-radius: 999px;
+  background: #eef2f7;
+  padding: 5px 9px;
+  color: #334155;
+  font-size: 12px;
+}

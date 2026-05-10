@@ -1,0 +1,49 @@
+.panel {
+  border: 1px solid #d7dee8;
+  border-radius: 8px;
+  background: #fff;
+  padding: 18px;
+}
+
+.label {
+  margin: 0 0 4px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+h2,
+p {
+  margin: 0;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+.member-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+article {
+  display: grid;
+  gap: 5px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fbfcfe;
+}
+
+span {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+p {
+  color: #64748b;
+  line-height: 1.45;
+}

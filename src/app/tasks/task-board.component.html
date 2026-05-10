@@ -1,0 +1,24 @@
+<section class="panel">
+  <div class="panel-header">
+    <div>
+      <p class="label">Osoba 1</p>
+      <h2>Tablica zadań</h2>
+    </div>
+    <span>{{ store.openTasksCount() }} otwarte</span>
+  </div>
+
+  <div class="task-list">
+    @for (task of store.tasks(); track task.id) {
+      <article class="task-card" [class.high]="task.priority === 'high'">
+        <div>
+          <h3>{{ task.title }}</h3>
+          <p>{{ task.description }}</p>
+        </div>
+        <footer>
+          <span>{{ task.status }}</span>
+          <strong>{{ task.priority }}</strong>
+        </footer>
+      </article>
+    }
+  </div>
+</section>

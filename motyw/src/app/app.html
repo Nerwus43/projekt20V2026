@@ -1,0 +1,14 @@
+<div [ngClass]="{ 'theme-dark': theme.isDark() }">
+  <nav>
+    <a routerLink="/">Home</a>
+    <a routerLink="/about">About</a>
+
+    <button (click)="theme.toggle()">
+      Zmień na {{ theme.isDark() ? 'jasny' : 'ciemny' }} motyw
+    </button>
+  </nav>
+
+  <hr>
+
+  <router-outlet></router-outlet>
+</div>
