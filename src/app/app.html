@@ -4,13 +4,16 @@
       <p class="eyebrow">Team Tasking</p>
       <h1>Panel pracy zespolu</h1>
     </div>
-    <div class="status-pill">3 osoby</div>
+    <div class="status-pill">{{ store.members().length }} osoby</div>
   </header>
 
-  <section class="layout">
-    <app-task-board />
-    <app-team-panel />
-  </section>
+  <nav class="main-nav" aria-label="Glowne widoki">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      Strona glowna
+    </a>
+    <a routerLink="/zespol" routerLinkActive="active">Zarzadzanie zespolem</a>
+    <a routerLink="/zadania" routerLinkActive="active">Zarzadzanie zadaniami</a>
+  </nav>
 
-  <app-summary-panel />
+  <router-outlet />
 </main>

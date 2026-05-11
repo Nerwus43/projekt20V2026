@@ -1,0 +1,48 @@
+<section class="management-page">
+  <header class="page-header">
+    <div>
+      <p class="label">Zarzadzanie</p>
+      <h2>Zespol</h2>
+    </div>
+    <button type="button" class="secondary-button" (click)="startAdd()">Nowa osoba</button>
+  </header>
+
+  <form class="manager-form" (ngSubmit)="saveMember()">
+    <h3>{{ editingMemberId ? 'Edytuj osobe' : 'Dodaj osobe' }}</h3>
+    <div class="form-grid">
+      <label>
+        Nazwa
+        <input name="memberName" [(ngModel)]="memberForm.name" required>
+      </label>
+      <label>
+        Rola
+        <input name="memberRole" [(ngModel)]="memberForm.role" required>
+      </label>
+      <label>
+        Zakres
+        <input name="memberFocus" [(ngModel)]="memberForm.focus" required>
+      </label>
+      <label>
+        Odpowiedzialnosc
+        <input name="memberResponsibility" [(ngModel)]="memberForm.responsibility" required>
+      </label>
+      <button type="submit">{{ editingMemberId ? 'Zapisz zmiany' : 'Dodaj osobe' }}</button>
+    </div>
+  </form>
+
+  <div class="table-list">
+    @for (member of store.members(); track member.id) {
+      <article class="row-card">
+        <div>
+          <strong>{{ member.name }}</strong>
+          <p>{{ member.role }}</p>
+          <span>{{ member.focus }}</span>
+        </div>
+        <div class="actions">
+          <button type="button" (click)="startEdit(member)">Edytuj</button>
+          <button type="button" class="danger" (click)="deleteMember(member.id)">Usun</button>
+        </div>
+      </article>
+    }
+  </div>
+</section>

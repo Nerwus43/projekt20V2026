@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-
-import { SummaryPanelComponent } from './integration/summary-panel.component';
-import { TaskBoardComponent } from './tasks/task-board.component';
-import { TeamPanelComponent } from './team/team-panel.component';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { TaskStoreService } from './core/task-store.service';
 
 @Component({
   selector: 'app-root',
-  imports: [TaskBoardComponent, TeamPanelComponent, SummaryPanelComponent],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {}
+export class App {
+  constructor(protected readonly store: TaskStoreService) {}
+}

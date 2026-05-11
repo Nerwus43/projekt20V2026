@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TaskStoreService } from '../core/task-store.service';
-import { TaskStatus, TaskPriority } from '../core/task.model';
+import { TaskPriority, TaskStatus } from '../core/task.model';
 
 @Component({
   selector: 'app-task-board',
@@ -14,29 +14,34 @@ import { TaskStatus, TaskPriority } from '../core/task.model';
 })
 export class TaskBoardComponent {
   protected readonly store = inject(TaskStoreService);
+  protected selectedPriority: TaskPriority | 'all' = 'all';
 
-  selectedPriority: TaskPriority | 'all' = 'all';
-
-  get filteredTasksByStatus() {
+  protected get filteredTasksByStatus() {
     return this.store.tasksByStatus().map((statusGroup) => ({
       ...statusGroup,
-      tasks: statusGroup.tasks.filter((task) => {
-        const priorityMatch =
-          this.selectedPriority === 'all' || task.priority === this.selectedPriority;
-        return priorityMatch;
-      }),
+      tasks: statusGroup.tasks.filter(
+        (task) => this.selectedPriority === 'all' || task.priority === this.selectedPriority,
+      ),
     }));
   }
 
-  get priorityOptions() {
+  protected get priorityOptions() {
     return [{ value: 'all', label: 'Wszystkie priorytety' }, ...this.store.priorities];
   }
 
-  getPriorityBadgeClass(priority: TaskPriority): string {
+  protected getPriorityBadgeClass(priority: TaskPriority): string {
     return `priority-${priority}`;
   }
 
-  getStatusBadgeClass(status: TaskStatus): string {
+  protected getStatusBadgeClass(status: TaskStatus): string {
     return `status-${status}`;
+  }
+
+  protected getPriorityLabel(priority: TaskPriority): string {
+    return this.store.priorities.find((option) => option.value === priority)?.label ?? priority;
+  }
+
+  protected getSelectedPriorityLabel(): string {
+    return this.priorityOptions.find((option) => option.value === this.selectedPriority)?.label ?? '';
   }
 }

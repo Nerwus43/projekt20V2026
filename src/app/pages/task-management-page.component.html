@@ -1,0 +1,64 @@
+<section class="management-page">
+  <header class="page-header">
+    <div>
+      <p class="label">Zarzadzanie</p>
+      <h2>Projekt i zadania</h2>
+    </div>
+    <button type="button" class="secondary-button" (click)="startAdd()">Nowe zadanie</button>
+  </header>
+
+  <form class="manager-form" (ngSubmit)="saveTask()">
+    <h3>{{ editingTaskId ? 'Edytuj zadanie' : 'Dodaj zadanie' }}</h3>
+    <div class="form-grid">
+      <label>
+        Tytul
+        <input name="taskTitle" [(ngModel)]="taskForm.title" required>
+      </label>
+      <label>
+        Opis
+        <input name="taskDescription" [(ngModel)]="taskForm.description" required>
+      </label>
+      <label>
+        Osoba
+        <select name="taskOwner" [(ngModel)]="taskForm.ownerId" required>
+          @for (member of store.members(); track member.id) {
+            <option [value]="member.id">{{ member.name }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        Status
+        <select name="taskStatus" [(ngModel)]="taskForm.status">
+          @for (status of store.statuses; track status.value) {
+            <option [value]="status.value">{{ status.label }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        Priorytet
+        <select name="taskPriority" [(ngModel)]="taskForm.priority">
+          @for (priority of store.priorities; track priority.value) {
+            <option [value]="priority.value">{{ priority.label }}</option>
+          }
+        </select>
+      </label>
+      <button type="submit">{{ editingTaskId ? 'Zapisz zmiany' : 'Dodaj zadanie' }}</button>
+    </div>
+  </form>
+
+  <div class="table-list">
+    @for (task of store.tasks(); track task.id) {
+      <article class="row-card">
+        <div>
+          <strong>{{ task.title }}</strong>
+          <p>{{ task.description }}</p>
+          <span>{{ store.memberName(task.ownerId) }} / {{ store.statusLabel(task.status) }}</span>
+        </div>
+        <div class="actions">
+          <button type="button" (click)="startEdit(task)">Edytuj</button>
+          <button type="button" class="danger" (click)="deleteTask(task.id)">Usun</button>
+        </div>
+      </article>
+    }
+  </div>
+</section>

@@ -22,9 +22,3 @@ Zrobione teraz:
 - [x] ekran glowny laczy modul zadan, modul zespolu i panel integracji
 - [x] panel integracji pokazuje statusy, odpowiedzialnosc i checkliste
 - [x] usunieto nieuzywany `RouterOutlet` z glownego komponentu
-
-Do zrobienia po pracy Remka i Piotrka:
-- [ ] sprawdzic, czy ich komponenty nadal uzywaja wspolnego modelu
-- [ ] uruchomic `npm.cmd start`
-- [ ] sprawdzic widok w przegladarce
-- [ ] zrobic ostatnie poprawki wizualne, jesli moduly sie rozjada

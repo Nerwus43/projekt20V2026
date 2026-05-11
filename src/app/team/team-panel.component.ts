@@ -1,13 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-interface TeamMember {
-  id: number;
-  name: string;
-  role: string;
-  responsibilities: string;
-  available: boolean;
-  assignedTask?: string;
-}
+import { TaskStoreService } from '../core/task-store.service';
+
 @Component({
   selector: 'app-team-panel',
   standalone: true,
@@ -15,44 +9,13 @@ interface TeamMember {
   styleUrls: ['./team-panel.component.css'],
 })
 export class TeamPanelComponent {
-  // lista członków zespołu jest tymczasowa i lokalna.
-  members: TeamMember[] = [
-    {
-      id: 1,
-      name: 'Osoba 1',
-      role: 'Moduł zadań',
-      responsibilities: 'Lista zadań, statusy, priorytety',
-      available: true,
-      assignedTask: ''
-    },
-    {
-      id: 2,
-      name: 'Osoba 2',
-      role: 'Moduł zespołu',
-      responsibilities: 'Członkowie, role, dostępność',
-      available: true,
-      assignedTask: ''
-    },
-    {
-      id: 3,
-      name: 'Osoba 3',
-      role: 'Integracja',
-      responsibilities: 'Łączenie modułów i wspólne dane',
-      available: false,
-      assignedTask: 'Integracja widoków'
-    }
-  ];
+  protected readonly store = inject(TaskStoreService);
 
-  assignTask(member: TeamMember): void {
-    const task = prompt('Wpisz nazwę zadania');
-    if (task) {
-      member.assignedTask = task;
-      member.available = false;
-    }
+  protected activeTasksFor(memberId: string) {
+    return this.store.tasks().filter((task) => task.ownerId === memberId && task.status !== 'done');
   }
 
-  clearTask(member: TeamMember): void {
-    member.assignedTask = '';
-    member.available = true;
+  protected isAvailable(memberId: string): boolean {
+    return this.activeTasksFor(memberId).length === 0;
   }
 }

@@ -131,4 +131,43 @@ export class TaskStoreService {
   statusLabel(status: TaskStatus): string {
     return this.statuses.find((option) => option.value === status)?.label ?? status;
   }
+
+  addTask(task: Omit<TeamTask, 'id'>): void {
+    const nextTask: TeamTask = {
+      ...task,
+      id: `task-${Date.now()}`,
+    };
+
+    this.tasksState.update((tasks) => [...tasks, nextTask]);
+  }
+
+  updateTask(taskId: string, changes: Omit<TeamTask, 'id'>): void {
+    this.tasksState.update((tasks) =>
+      tasks.map((task) => (task.id === taskId ? { ...changes, id: taskId } : task)),
+    );
+  }
+
+  deleteTask(taskId: string): void {
+    this.tasksState.update((tasks) => tasks.filter((task) => task.id !== taskId));
+  }
+
+  addMember(member: Omit<TeamMember, 'id'>): void {
+    const nextMember: TeamMember = {
+      ...member,
+      id: `person-${Date.now()}`,
+    };
+
+    this.membersState.update((members) => [...members, nextMember]);
+  }
+
+  updateMember(memberId: string, changes: Omit<TeamMember, 'id'>): void {
+    this.membersState.update((members) =>
+      members.map((member) => (member.id === memberId ? { ...changes, id: memberId } : member)),
+    );
+  }
+
+  deleteMember(memberId: string): void {
+    this.membersState.update((members) => members.filter((member) => member.id !== memberId));
+    this.tasksState.update((tasks) => tasks.filter((task) => task.ownerId !== memberId));
+  }
 }
