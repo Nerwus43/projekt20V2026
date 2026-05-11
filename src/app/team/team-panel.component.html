@@ -1,13 +1,29 @@
 <aside class="panel">
-  <p class="label">Osoba 2</p>
-  <h2>Zespół</h2>
+  <p class="label">Zespół</p>
+  <h2>Członkowie</h2>
 
   <div class="member-list">
-    @for (member of store.members(); track member.id) {
-      <article>
-        <strong>{{ member.name }}</strong>
-        <span>{{ member.role }}</span>
-        <p>{{ member.focus }}</p>
+    @for (member of members; track member.id) {
+      <article class="member-card">
+        <div class="top-row">
+          <strong>{{ member.name }}</strong>
+          <span class="role">{{ member.role }}</span>
+        </div>
+        <p class="focus">{{ member.responsibilities }}</p>
+        <div class="availability" [class.available]="member.available">
+          {{ member.available ? 'Dostępny' : 'Zajęty' }}
+        </div>
+        <div class="task-placeholder">
+          {{ member.assignedTask ? member.assignedTask : 'Brak przypisanego zadania' }}
+        </div>
+        <button (click)="assignTask(member)">
+          {{ member.assignedTask ? 'Zmień zadanie' : 'Przypisz zadanie' }}
+        </button>
+        @if (member.assignedTask) {
+          <button (click)="clearTask(member)">
+            Usuń zadanie
+          </button>
+        }
       </article>
     }
   </div>
