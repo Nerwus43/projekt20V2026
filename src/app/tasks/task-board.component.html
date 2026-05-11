@@ -1,24 +1,78 @@
-<section class="panel">
-  <div class="panel-header">
+<section class="task-board">
+  <!-- Nagłówek i filtry -->
+  <div class="board-header">
     <div>
       <p class="label">Osoba 1</p>
-      <h2>Tablica zadań</h2>
+      <h1>Tablica zadań</h1>
     </div>
-    <span>{{ store.openTasksCount() }} otwarte</span>
+    <div class="header-stats">
+      <span class="stat-badge">{{ store.openTasksCount() }} otwarte</span>
+      <span class="stat-badge done">{{ store.doneTasksCount() }} gotowe</span>
+    </div>
   </div>
 
-  <div class="task-list">
-    @for (task of store.tasks(); track task.id) {
-      <article class="task-card" [class.high]="task.priority === 'high'">
-        <div>
-          <h3>{{ task.title }}</h3>
-          <p>{{ task.description }}</p>
+  <!-- Filtry -->
+  <div class="filters">
+    <div class="filter-group">
+      <label for="priority-filter">Priorytet:</label>
+      <select id="priority-filter" [(ngModel)]="selectedPriority" class="filter-select">
+        @for (option of priorityOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-info">
+      @if (selectedPriority !== 'all') {
+        <span class="filter-tag">
+          Filtr: {{ priorityOptions.find(o => o.value === selectedPriority)?.label }}
+          <button (click)="selectedPriority = 'all'" class="clear-filter">✕</button>
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Kolumny statusów -->
+  <div class="board-columns">
+    @for (statusGroup of filteredTasksByStatus; track statusGroup.value) {
+      <div class="status-column">
+        <div class="column-header">
+          <h2 class="column-title">{{ statusGroup.label }}</h2>
+          <span class="task-count">{{ statusGroup.tasks.length }}</span>
         </div>
-        <footer>
-          <span>{{ task.status }}</span>
-          <strong>{{ task.priority }}</strong>
-        </footer>
-      </article>
+
+        <div class="tasks-container">
+          @if (statusGroup.tasks.length === 0) {
+            <div class="empty-state">Brak zadań</div>
+          }
+
+          @for (task of statusGroup.tasks; track task.id) {
+            <article class="task-card" [class]="getPriorityBadgeClass(task.priority)">
+              <div class="task-header">
+                <h3>{{ task.title }}</h3>
+                <span class="priority-badge" [class]="getPriorityBadgeClass(task.priority)">
+                  {{ store.priorities.find(p => p.value === task.priority)?.label }}
+                </span>
+              </div>
+
+              <p class="task-description">{{ task.description }}</p>
+
+              <footer class="task-footer">
+                <span class="owner-info">{{ store.memberName(task.ownerId) }}</span>
+                <span class="status-label">{{ statusGroup.label }}</span>
+              </footer>
+            </article>
+          }
+        </div>
+      </div>
     }
+  </div>
+
+  <!-- Miejsce na formularz dodawania zadania -->
+  <div class="add-task-section">
+    <div class="add-task-placeholder">
+      <h3>Dodaj nowe zadanie</h3>
+      <p>Formularz do dodawania zadań będzie tutaj</p>
+    </div>
   </div>
 </section>
