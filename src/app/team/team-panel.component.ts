@@ -15,6 +15,10 @@ export class TeamPanelComponent {
     return this.store.tasks().filter((task) => task.ownerId === memberId && task.status !== 'done');
   }
 
+  protected taskCount(memberId: string): number {
+    return this.store.tasks().filter((task) => task.ownerId === memberId).length;
+  }
+
   protected isAvailable(memberId: string): boolean {
     return this.activeTasksFor(memberId).length === 0;
   }

@@ -1,8 +1,8 @@
 <aside class="panel">
   <div class="panel-heading">
     <div>
-      <p class="label">Osoba 2</p>
-      <h2>Czlonkowie</h2>
+      <p class="label">Osoby w zespole</p>
+      <h2>Członkowie</h2>
     </div>
   </div>
 
@@ -10,20 +10,24 @@
     @for (member of store.members(); track member.id) {
       <article class="member-card">
         <div class="top-row">
-          <strong>{{ member.name }}</strong>
-          <span class="role">{{ member.role }}</span>
+          <div>
+            <strong>{{ member.name }}</strong>
+            <p class="member-meta">{{ member.role }} · {{ taskCount(member.id) }} zadań</p>
+          </div>
+          <div class="availability" [class.available]="isAvailable(member.id)" [class.busy]="!isAvailable(member.id)">
+            {{ isAvailable(member.id) ? 'Dostępny' : 'Zajęty' }}
+          </div>
         </div>
 
         <p class="focus">{{ member.focus }}</p>
         <p class="responsibility">{{ member.responsibility }}</p>
 
-        <div class="availability" [class.available]="isAvailable(member.id)">
-          {{ isAvailable(member.id) ? 'Dostepny' : 'Zajety' }}
-        </div>
-
         <div class="task-placeholder">
+          <div class="task-placeholder-title">
+            Aktywne zadania ({{ activeTasksFor(member.id).length }})
+          </div>
           @if (activeTasksFor(member.id).length === 0) {
-            Brak aktywnych zadan
+            <span class="empty-state">Brak aktywnych zadań</span>
           } @else {
             @for (task of activeTasksFor(member.id); track task.id) {
               <span>{{ task.title }}</span>
